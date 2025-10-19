@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrincipalController;
 use App\Livewire\GenerosManager;
 use App\Livewire\LibrosManager;
 use App\Livewire\PrestamosHistorial;
@@ -13,12 +14,13 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+/* Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('dashboard'); */
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('dashboard', [PrincipalController::class, 'caducados'])->name('dashboard');
     Route::get('generos', GenerosManager::class)->name('generos.index');
     Route::get('libros', LibrosManager::class)->name('libros.index');
     Route::get('socios', SociosManager::class)->name('socios.index');
