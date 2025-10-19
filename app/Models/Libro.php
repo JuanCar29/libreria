@@ -23,6 +23,6 @@ class Libro extends Model
 
     public function prestado()
     {
-        return $this->prestamos()->where('fecha_devolucion_real', null);
+        return $this->prestamos()->whereNull('fecha_devolucion_real')->exists();
     }
 }

@@ -9,13 +9,25 @@
         </flux:button>
     </div>
 
+    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black sm:grid-cols-2 lg:grid-cols-3 dark:bg-gray-700 dark:text-white">
+        <flux:input wire:model.live.debounce.500ms="buscar_titulo" placeholder="Buscar por título" clearable />
+        <flux:select wire:model.live="buscar_genero">
+            <option value="">Selecciona un género</option>
+            @forelse($this->generos as $genero)
+                <flux:select.option value="{{ $genero->id }}">{{ $genero->nombre }}</flux:select.option>
+            @empty
+                <flux:select.option value="">No hay géneros</flux:select.option>
+            @endforelse
+        </flux:select>
+    </div>
+
     <x-data-table :headers="['Id', 'Título', 'Genero', 'Autor', 'Prestamos', 'Acciones']">
         @forelse ($this->libros as $libro)
             <tr wire:key="libro-{{ $libro->id }}">
                 <td class="p-4">
                     {{ $libro->id }}
                 </td>
-                <td class="p-4 text-left">{{ $libro->titulo }}</td>
+                <td @class(['p-4 text-left', 'text-red-600' => $libro->prestado()])>{{ $libro->titulo }}</td>
                 <td class="p-4 text-left">{{ $libro->genero->nombre }}</td>
                 <td class="p-4 text-left">{{ $libro->autor }}</td>
                 <td class="p-4">{{ $libro->prestamos_count }}

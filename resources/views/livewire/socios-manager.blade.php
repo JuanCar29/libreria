@@ -9,6 +9,16 @@
         </flux:button>
     </div>
 
+    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black sm:grid-cols-2 lg:grid-cols-3 dark:bg-gray-800 dark:text-white">
+        <flux:input wire:model.live.debounce.50ms="buscar_nombre" placeholder="Buscar socio por nombre" clearable />
+        <flux:input wire:model.live.debounce.50ms="buscar_telefono" placeholder="Buscar socio por teléfono" clearable />
+        <flux:select wire:model.live="buscar_activo">
+            <flux:select.option value="">Todos</flux:select.option>
+            <flux:select.option value="1">Activos</flux:select.option>
+            <flux:select.option value="0">Inactivos</flux:select.option>
+        </flux:select>
+    </div>
+
     <x-data-table :headers="['Id', 'Nombre', 'Email', 'Teléfono', 'Prestamos', 'Sanciones', 'Acciones']">
         @forelse ($this->socios as $socio)
             <tr wire:key="socio-{{ $socio->id }}">

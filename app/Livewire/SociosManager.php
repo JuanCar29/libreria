@@ -23,6 +23,12 @@ class SociosManager extends Component
 
     public $mode;
 
+    public $buscar_nombre;
+
+    public $buscar_telefono;
+
+    public $buscar_activo = '';
+
     protected function rules()
     {
         return [
@@ -72,6 +78,11 @@ class SociosManager extends Component
     public function socios()
     {
         return Socio::orderBy('nombre')
+            ->where('nombre', 'like', '%'.$this->buscar_nombre.'%')
+            ->where('telefono', 'like', '%'.$this->buscar_telefono.'%')
+            ->when($this->buscar_activo !== '', function ($query) {
+                $query->where('activo', $this->buscar_activo);
+            })
             ->withCount('prestamos')
             ->withSum('prestamos', 'sancion')
             ->paginate(10);

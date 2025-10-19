@@ -26,6 +26,10 @@ class LibrosManager extends Component
 
     public $libro_id = null;
 
+    public $buscar_titulo;
+
+    public $buscar_genero;
+
     public function rules()
     {
         return [
@@ -84,6 +88,10 @@ class LibrosManager extends Component
     public function libros()
     {
         return Libro::orderBy('titulo')
+            ->where('titulo', 'like', '%'.$this->buscar_titulo.'%')
+            ->when($this->buscar_genero, function ($query) {
+                $query->where('genero_id', $this->buscar_genero);
+            })
             ->with('genero')
             ->withCount('prestamos')
             ->paginate(10);
