@@ -17,6 +17,16 @@ class PrestamosHistorial extends Component
 
     public $prestamo_id;
 
+    public $desde;
+
+    public $hasta;
+
+    public function mount()
+    {
+        $this->desde = today()->startOfMonth()->format('Y-m-d');
+        $this->hasta = today()->endOfMonth()->format('Y-m-d');
+    }
+
     public function rules()
     {
         return [
@@ -53,6 +63,7 @@ class PrestamosHistorial extends Component
     public function prestamos()
     {
         return Prestamo::orderBy('fecha_prestamo')
+            ->whereNotNull('fecha_devolucion_real')
             ->with('libro', 'socio', 'usuario')
             ->paginate(10);
     }

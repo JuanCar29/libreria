@@ -23,7 +23,7 @@
 
     <x-data-table :headers="['Id', 'Título', 'Genero', 'Autor', 'Prestamos', 'Acciones']">
         @forelse ($this->libros as $libro)
-            <tr wire:key="libro-{{ $libro->id }}">
+            <tr wire:key="libro-prestamo-{{ $libro->id }}">
                 <td class="p-4">
                     {{ $libro->id }}
                 </td>
@@ -70,7 +70,7 @@
                 <flux:spacer />
                 <div class="flex justify-end gap-4">
                     <flux:modal.close>
-                        <flux:button variant="filled" class="cursor-pointer">Cancelar</flux:button>
+                        <flux:button variant="filled" class="cursor-pointer" size="sm">Cancelar</flux:button>
                     </flux:modal.close>
                     <flux:button type="submit" variant="primary" class="cursor-pointer" size="sm">
                         {{ $mode ? 'Actualizar' : 'Guardar' }}

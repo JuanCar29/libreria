@@ -1,9 +1,17 @@
 <div class="w-7xl mx-auto rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm sm:p-8 dark:border-gray-700 dark:bg-gray-800">
+
+    <x-alerta />
+
     <div class="mb-4 flex items-center justify-between p-2">
         <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Historial de prestamos</h5>
         <flux:button wire:click="pdf" class="cursor-pointer" icon="plus" variant="primary" size="sm">
             Crear PDF
         </flux:button>
+    </div>
+
+    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black lg:grid-cols-3 dark:bg-gray-800 dark:text-white">
+        <flux:input wire:model.live="desde" type="date" label="Desde" />
+        <flux:input wire:model.live="hasta" type="date" label="Hasta" />
     </div>
 
     <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Dias prestado', 'Sanción', 'Acciones']">
@@ -47,7 +55,7 @@
                 <flux:spacer />
                 <div class="flex justify-end gap-4">
                     <flux:modal.close>
-                        <flux:button variant="filled" class="cursor-pointer">Cancelar</flux:button>
+                        <flux:button variant="filled" class="cursor-pointer" size="sm">Cancelar</flux:button>
                     </flux:modal.close>
                     <flux:button type="submit" variant="primary" class="cursor-pointer" size="sm">
                         Actualizar

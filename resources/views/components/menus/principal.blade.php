@@ -1,6 +1,6 @@
 <flux:navbar class="-mb-px max-lg:hidden">
     <flux:navbar.item :href="route('home')" icon="home">Home</flux:navbar.item>
-    <flux:navbar.item href="#" icon="book-open">Libros</flux:navbar.item>
+    <flux:navbar.item :href="route('libros.catalogo')" icon="book-open">Libros</flux:navbar.item>
     @auth
         <flux:navbar.item :href="route('dashboard')" icon="user-circle">Mi cuenta</flux:navbar.item>
     @else

@@ -9,6 +9,10 @@
         </flux:button>
     </div>
 
+    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black lg:grid-cols-3 dark:bg-gray-800 dark:text-white">
+        <flux:input wire:model.live="dia" type="date" label="Fecha de prestamo" />
+    </div>
+
     <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Dias prestado', 'Acciones']">
         @forelse ($this->prestamos as $prestamo)
             <tr wire:key="prestamo-{{ $prestamo->id }}">
@@ -71,7 +75,7 @@
                 <flux:spacer />
                 <div class="flex justify-end gap-4">
                     <flux:modal.close>
-                        <flux:button variant="filled" class="cursor-pointer">Cancelar</flux:button>
+                        <flux:button variant="filled" class="cursor-pointer" size="sm">Cancelar</flux:button>
                     </flux:modal.close>
                     <flux:button type="submit" variant="primary" class="cursor-pointer" size="sm">
                         {{ $mode ? 'Actualizar' : 'Guardar' }}

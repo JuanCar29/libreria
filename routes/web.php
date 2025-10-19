@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PrincipalController;
 use App\Livewire\GenerosManager;
+use App\Livewire\LibrosCatalogo;
 use App\Livewire\LibrosManager;
 use App\Livewire\PrestamosHistorial;
 use App\Livewire\PrestamosManager;
@@ -14,11 +15,9 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-/* Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard'); */
+Route::get('catalogo', LibrosCatalogo::class)->name('libros.catalogo');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('dashboard', [PrincipalController::class, 'caducados'])->name('dashboard');
     Route::get('generos', GenerosManager::class)->name('generos.index');

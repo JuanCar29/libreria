@@ -31,6 +31,13 @@ class PrestamosManager extends Component
 
     public $mode;
 
+    public $dia;
+
+    public function mount()
+    {
+        $this->dia = today()->format('Y-m-d');
+    }
+
     public function rules()
     {
         return [
