@@ -55,7 +55,7 @@ class PrestamosManager extends Component
         $this->mode = false;
         $this->reset(['libro_id', 'socio_id', 'fecha_prestamo', 'fecha_devolucion', 'fecha_devolucion_real', 'sancion']);
         $this->fecha_prestamo = today()->format('Y-m-d');
-        $this->fecha_devolucion = today()->addDays(15)->format('Y-m-d');
+        $this->fecha_devolucion = today()->addDays(Prestamo::DIAS)->format('Y-m-d');
         $this->modal('prestamo-modal')->show();
     }
 
@@ -94,6 +94,10 @@ class PrestamosManager extends Component
     {
         $this->fecha_devolucion_real = today()->format('Y-m-d');
         $prestamo->update(['fecha_devolucion_real' => $this->fecha_devolucion_real]);
+        if ($prestamo->diasSancion() > 0) {
+            $this->sancion = $prestamo->diasSancion() * Prestamo::SANCION;
+            $prestamo->update(['sancion' => $this->sancion]);
+        }
         session()->flash('status', 'Prestamo devuelto correctamente');
     }
 
@@ -101,6 +105,8 @@ class PrestamosManager extends Component
     public function prestamos()
     {
         return Prestamo::latest()
+            ->whereDate('fecha_prestamo', $this->dia)
+            ->whereNull('fecha_devolucion_real')
             ->with('libro', 'socio', 'usuario')
             ->paginate(10);
     }

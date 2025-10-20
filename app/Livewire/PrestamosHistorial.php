@@ -62,10 +62,21 @@ class PrestamosHistorial extends Component
     #[Computed]
     public function prestamos()
     {
-        return Prestamo::orderBy('fecha_prestamo')
+        return Prestamo::with(['libro', 'socio', 'usuario'])
+            ->whereBetween('fecha_prestamo', [$this->desde, $this->hasta])
             ->whereNotNull('fecha_devolucion_real')
-            ->with('libro', 'socio', 'usuario')
+            ->orderBy('fecha_prestamo')
             ->paginate(10);
+    }
+
+    public function updatingDesde()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingHasta()
+    {
+        $this->resetPage();
     }
 
     public function render()

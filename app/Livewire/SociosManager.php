@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Socio;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -32,22 +33,33 @@ class SociosManager extends Component
     protected function rules()
     {
         return [
-            'nombre' => 'required|string|max:255|unique:socios,nombre,'.($this->mode ? $this->socio_id : 'NULL').',id',
-            'email' => 'required|email|max:255|unique:socios,email,'.($this->mode ? $this->socio_id : 'NULL').',id',
-            'telefono' => 'nullable|integer|digits:9',
-            'activo' => 'boolean',
+            'nombre' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('socios', 'nombre')->ignore($this->socio_id),
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('socios', 'email')->ignore($this->socio_id),
+            ],
+            'telefono' => ['nullable', 'regex:/^[0-9]{9}$/'],
+            'activo' => ['boolean'],
         ];
     }
 
     public function create()
     {
+        $this->reset(['nombre', 'email', 'telefono', 'activo', 'mode']);
         $this->mode = false;
-        $this->reset(['nombre', 'email', 'telefono', 'activo']);
         $this->modal('socio-modal')->show();
     }
 
     public function edit(Socio $socio)
     {
+        $this->reset(['nombre', 'email', 'telefono', 'activo', 'mode']);
         $this->mode = true;
         $this->socio_id = $socio->id;
         $this->nombre = $socio->nombre;
