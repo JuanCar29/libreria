@@ -4,8 +4,8 @@
 
     <div class="mb-4 flex items-center justify-between p-2">
         <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Historial de prestamos</h5>
-        <flux:button wire:click="pdf" class="cursor-pointer" icon="plus" variant="primary" size="sm">
-            Crear PDF
+        <flux:button variant="primary" href="{{ route('prestamos.pdf', ['desde' => $desde, 'hasta' => $hasta]) }}" target="_blank" class="curdor-pointer">
+            Descargar PDF
         </flux:button>
     </div>
 
