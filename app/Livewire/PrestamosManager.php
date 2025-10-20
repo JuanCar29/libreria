@@ -105,7 +105,9 @@ class PrestamosManager extends Component
     public function prestamos()
     {
         return Prestamo::latest()
-            ->whereDate('fecha_prestamo', $this->dia)
+            ->when($this->dia !== '', function ($query) {
+                $query->whereDate('fecha_prestamo', $this->dia);
+            })
             ->whereNull('fecha_devolucion_real')
             ->with('libro', 'socio', 'usuario')
             ->paginate(10);

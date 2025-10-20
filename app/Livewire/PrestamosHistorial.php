@@ -21,6 +21,8 @@ class PrestamosHistorial extends Component
 
     public $hasta;
 
+    public $devueltos = false;
+
     public function mount()
     {
         $this->desde = today()->startOfMonth()->format('Y-m-d');
@@ -64,7 +66,9 @@ class PrestamosHistorial extends Component
     {
         return Prestamo::with(['libro', 'socio', 'usuario'])
             ->whereBetween('fecha_prestamo', [$this->desde, $this->hasta])
-            ->whereNotNull('fecha_devolucion_real')
+            ->when($this->devueltos, function ($query) {
+                $query->whereNull('fecha_devolucion_real');
+            })
             ->orderBy('fecha_prestamo')
             ->paginate(10);
     }

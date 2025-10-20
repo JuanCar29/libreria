@@ -10,8 +10,12 @@
     </div>
 
     <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black lg:grid-cols-3 dark:bg-gray-800 dark:text-white">
-        <flux:input wire:model.live="desde" type="date" label="Desde" />
-        <flux:input wire:model.live="hasta" type="date" label="Hasta" />
+        <flux:input wire:model.live="desde" type="date" label="Desde" max="{{ $hasta }}" />
+        <flux:input wire:model.live="hasta" type="date" label="Hasta" min="{{ $desde }}" />
+        <flux:field>
+            <flux:label>Prestamos sin devolver</flux:label>
+            <flux:switch wire:model.live="devueltos" />
+        </flux:field>
     </div>
 
     <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Dias prestado', 'Sanción', 'Acciones']">
