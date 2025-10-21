@@ -27,7 +27,7 @@ class PrincipalController extends Controller
             ->get();
 
         if ($prestamos->isEmpty()) {
-            session()->flash('status', 'No hay notificaciones para enviar.');
+            session()->flash('danger', 'No hay notificaciones para enviar.');
 
             return redirect()->route('dashboard');
         }

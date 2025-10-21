@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Socio;
+use App\Notifications\EmailSocio;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -29,6 +30,10 @@ class SociosManager extends Component
     public $buscar_telefono;
 
     public $buscar_activo = '';
+
+    public $asunto;
+
+    public $cuerpo;
 
     protected function rules()
     {
@@ -84,6 +89,28 @@ class SociosManager extends Component
 
         $this->modal('socio-modal')->close();
         $this->reset(['nombre', 'email', 'telefono', 'activo', 'mode']);
+    }
+
+    public function enviar(Socio $socio)
+    {
+        $this->reset(['asunto', 'cuerpo']);
+        $this->socio_id = $socio->id;
+        $this->email = $socio->email;
+        $this->modal('email-modal')->show();
+    }
+
+    public function send()
+    {
+        $validated = $this->validate([
+            'asunto' => 'required|string|max:255',
+            'cuerpo' => 'required|string|min:5',
+        ]);
+
+        $socio = Socio::find($this->socio_id);
+        $socio->notify(new EmailSocio($validated));
+        session()->flash('status', 'Email enviado correctamente');
+        $this->modal('email-modal')->close();
+        $this->reset(['asunto', 'cuerpo']);
     }
 
     #[Computed]
