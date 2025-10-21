@@ -4,9 +4,13 @@
         <x-alerta />
         <div class="mb-4 flex items-center justify-between p-2">
             <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Listado de prestamos caducados</h5>
-            <flux:button wire:click="create" class="cursor-pointer" icon="plus" variant="primary" size="sm">
-                Mandar notificaciones
-            </flux:button>
+
+            <form action="{{ route('mandarmails') }}" method="POST">
+                @csrf
+                <flux:button type="submit" class="cursor-pointer" icon="envelope" variant="primary" size="sm">
+                    Mandar notificaciones
+                </flux:button>
+            </form>
         </div>
 
         <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Días', 'Fecha notificación']">

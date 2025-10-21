@@ -15,4 +15,30 @@ class PrincipalController extends Controller
 
         return view('dashboard', compact('caducados'));
     }
+
+    public function mandarMails()
+    {
+        $prestamos = Prestamo::where('fecha_devolucion', '<', today())
+            ->where(function ($query) {
+                $query->whereNull('fecha_notificacion')
+                    ->orWhere('fecha_notificacion', '<', today()->addDays(3));
+            })
+            ->with(['libro', 'socio'])
+            ->get();
+
+        if ($prestamos->isEmpty()) {
+            session()->flash('status', 'No hay notificaciones para enviar.');
+
+            return redirect()->route('dashboard');
+        }
+
+        foreach ($prestamos as $prestamo) {
+            $prestamo->socio->notify(new PrestamoCaducado);
+            $prestamo->update(['fecha_notificacion' => today()]);
+        }
+
+        session()->flash('status', 'Notificaciones enviadas con éxito.');
+
+        return redirect()->route('dashboard');
+    }
 }

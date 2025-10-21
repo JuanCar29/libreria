@@ -27,6 +27,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('prestamos', PrestamosManager::class)->name('prestamos.index');
     Route::get('historial', PrestamosHistorial::class)->name('prestamos.historial');
     Route::get('/prestamos/pdf', [PrestamosPdfController::class, 'generatePdf'])->name('prestamos.pdf');
+    Route::post('mandarmails', [PrincipalController::class, 'mandarMails'])->name('mandarmails');
 
 });
 
