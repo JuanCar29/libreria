@@ -3,7 +3,7 @@
     <x-alerta />
 
     <div class="mb-4 flex items-center justify-between p-2">
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Listado de prestamos</h5>
+        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Listado de prestamos {{ $this->totalprestamos() }}</h5>
         <flux:button wire:click="create" class="cursor-pointer" icon="plus" variant="primary" size="sm">
             Nuevo prestamo
         </flux:button>
@@ -11,6 +11,8 @@
 
     <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black lg:grid-cols-3 dark:bg-gray-800 dark:text-white">
         <flux:input wire:model.live="dia" type="date" label="Fecha de prestamo" />
+        <flux:input wire:model.liv.debounce.500ms="buscar_libro_id" type="text" label="Buscar libro por ID" clearable />
+        <flux:input wire:model.live.debounce.500ms="buscar_socio_id" type="text" label="Buscar socio por ID" clearable />
     </div>
 
     <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Dias prestado', 'Acciones']">
@@ -69,9 +71,6 @@
                 </flux:select>
                 <flux:input wire:model="fecha_prestamo" type="date" label="Fecha prestamo" />
                 <flux:input wire:model="fecha_devolucion" type="date" label="Fecha devolución" />
-                @if ($mode)
-                    <flux:input wire:model="sancion" type="number" step="0.01" label="Sanción" icon:trailing="currency-euro" />
-                @endif
                 <flux:spacer />
                 <div class="flex justify-end gap-4">
                     <flux:modal.close>

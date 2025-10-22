@@ -33,10 +33,14 @@ class PrestamosManager extends Component
 
     public $dia;
 
-    public function mount()
+    public $buscar_libro_id;
+
+    public $buscar_socio_id;
+
+    /* public function mount()
     {
         $this->dia = today()->format('Y-m-d');
-    }
+    } */
 
     public function rules()
     {
@@ -68,7 +72,6 @@ class PrestamosManager extends Component
         $this->socio_id = $prestamo->socio_id;
         $this->fecha_prestamo = $prestamo->fecha_prestamo->format('Y-m-d');
         $this->fecha_devolucion = $prestamo->fecha_devolucion->format('Y-m-d');
-        $this->sancion = 0;
         $this->modal('prestamo-modal')->show();
     }
 
@@ -105,12 +108,25 @@ class PrestamosManager extends Component
     public function prestamos()
     {
         return Prestamo::latest()
-            ->when($this->dia !== '', function ($query) {
+            ->when($this->dia, function ($query) {
                 $query->whereDate('fecha_prestamo', $this->dia);
+            })
+            ->when($this->buscar_libro_id, function ($query) {
+                $query->where('libro_id', $this->buscar_libro_id);
+            })
+            ->when($this->buscar_socio_id, function ($query) {
+                $query->where('socio_id', $this->buscar_socio_id);
             })
             ->whereNull('fecha_devolucion_real')
             ->with('libro', 'socio', 'usuario')
             ->paginate(10);
+    }
+
+    #[Computed]
+    public function totalprestamos()
+    {
+        return Prestamo::whereNull('fecha_devolucion_real')
+            ->count();
     }
 
     #[Computed]
