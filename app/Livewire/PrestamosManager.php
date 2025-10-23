@@ -97,8 +97,8 @@ class PrestamosManager extends Component
     {
         $this->fecha_devolucion_real = today()->format('Y-m-d');
         $prestamo->update(['fecha_devolucion_real' => $this->fecha_devolucion_real]);
-        if ($prestamo->diasSancion() > 0) {
-            $this->sancion = $prestamo->diasSancion() * Prestamo::SANCION;
+        if ($prestamo->dias_sancion > 0) {
+            $this->sancion = $prestamo->dias_sancion * Prestamo::SANCION;
             $prestamo->update(['sancion' => $this->sancion]);
         }
         session()->flash('status', 'Prestamo devuelto correctamente');

@@ -77,7 +77,7 @@
                     <th>Socio</th>
                     <th>Prestado</th>
                     <th>Devuelto</th>
-                    <th>Días retraso</th>
+                    <th>Días</th>
                     <th>Multa</th>
                 </tr>
             </thead>
@@ -89,8 +89,8 @@
                         <td>{{ $prestamo->socio->nombre ?? '—' }}</td>
                         <td>{{ $prestamo->fecha_prestamo?->format('d/m/Y') }}</td>
                         <td>{{ $prestamo->fecha_devolucion_real?->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $prestamo->dias_sancion }}</td>
-                        <td class="text-right">
+                        <td class="text-center">{{ $prestamo->dias_transcurridos }}</td>
+                        <td class="text-center">
                             {{ $prestamo->sancion ? number_format($prestamo->sancion, 2, ',', '.') . ' €' : '—' }}
                         </td>
                     </tr>
