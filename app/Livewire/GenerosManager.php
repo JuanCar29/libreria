@@ -22,21 +22,21 @@ class GenerosManager extends Component
     public function rules()
     {
         return [
-            'nombre' => 'required|string|max:255|unique:generos,nombre,'.($this->mode === 'edit' ? $this->genero_id : 'NULL').',id',
+            'nombre' => 'required|string|max:255|unique:generos,nombre,'.($this->mode ? $this->genero_id : 'NULL').',id',
             'descripcion' => 'nullable|string|max:1000',
         ];
     }
 
     public function create()
     {
-        $this->mode = 'create';
+        $this->mode = false;
         $this->reset(['nombre', 'descripcion']);
         $this->modal('genero-modal')->show();
     }
 
     public function edit(Genero $genero)
     {
-        $this->mode = 'edit';
+        $this->mode = true;
         $this->genero_id = $genero->id;
         $this->nombre = $genero->nombre;
         $this->descripcion = $genero->descripcion;
@@ -47,7 +47,7 @@ class GenerosManager extends Component
     {
         $this->validate();
 
-        if ($this->mode === 'edit') {
+        if ($this->mode) {
             $genero = Genero::find($this->genero_id);
             $genero->update([
                 'nombre' => $this->nombre,
