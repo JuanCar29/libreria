@@ -1,22 +1,21 @@
-<div class="w-7xl mx-auto rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm sm:p-8 dark:border-gray-700 dark:bg-gray-800">
+<x-caja-principal>
 
     <x-alerta />
 
-    <div class="mb-4 flex items-center justify-between p-2">
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Historial de prestamos</h5>
+    <x-caja-titulo :title="'Historial de prestamos'">
         <flux:button variant="primary" href="{{ route('prestamos.pdf', ['desde' => $desde, 'hasta' => $hasta]) }}" target="_blank" class="curdor-pointer">
             Descargar PDF
         </flux:button>
-    </div>
+    </x-caja-titulo>
 
-    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black lg:grid-cols-3 dark:bg-gray-800 dark:text-white">
+    <x-caja-filtros>
         <flux:input wire:model.live="desde" type="date" label="Desde" max="{{ $hasta }}" />
         <flux:input wire:model.live="hasta" type="date" label="Hasta" min="{{ $desde }}" />
         <flux:field>
             <flux:label>Prestamos sin devolver</flux:label>
             <flux:switch wire:model.live="devueltos" />
         </flux:field>
-    </div>
+    </x-caja-filtros>
 
     <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Dias prestado', 'Sanción', 'Acciones']">
         @forelse ($this->prestamos as $prestamo)
@@ -68,4 +67,5 @@
             </form>
         </div>
     </flux:modal>
-</div>
+
+</x-caja-principal>

@@ -1,11 +1,10 @@
-<div class="w-7xl mx-auto rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm sm:p-8 dark:border-gray-700 dark:bg-gray-800">
+<x-caja-principal>
 
-    <div class="mb-4 flex flex-col gap-2 p-2">
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Listado de libros</h5>
+    <x-caja-titulo :title="'Listado de libros'">
         <p>En rojo libros prestados actualmente</p>
-    </div>
+    </x-caja-titulo>
 
-    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black lg:grid-cols-3 dark:bg-gray-700 dark:text-white">
+    <x-caja-filtros>
         <flux:input wire:model.live.debounce.500ms="buscar_titulo" placeholder="Buscar por título" clearable />
         <flux:input wire:model.live.debounce.500ms="buscar_autor" placeholder="Buscar por autor" clearable />
         <flux:select wire:model.live="buscar_genero">
@@ -16,7 +15,7 @@
                 <flux:select.option value="">No hay géneros</flux:select.option>
             @endforelse
         </flux:select>
-    </div>
+    </x-caja-filtros>
 
     <x-data-table :headers="['ISBN', 'Título', 'Genero', 'Autor', 'Nº Prestamos']">
         @forelse ($this->libros as $libro)
@@ -39,4 +38,5 @@
     <div class="mt-4">
         {{ $this->libros->links() }}
     </div>
-</div>
+
+</x-caja-principal>

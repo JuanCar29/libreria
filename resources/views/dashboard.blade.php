@@ -1,17 +1,17 @@
 <x-layouts.app :title="__('Dashboard')" description="Página del panel de control de la aplicación">
 
-    <div class="w-7xl mx-auto rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm sm:p-8 dark:border-gray-700 dark:bg-gray-800">
-        <x-alerta />
-        <div class="mb-4 flex items-center justify-between p-2">
-            <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Listado de prestamos caducados</h5>
+    <x-caja-principal>
 
+        <x-alerta />
+
+        <x-caja-titulo :title="'Listado de prestamos caducados'">
             <form action="{{ route('mandarmails') }}" method="POST">
                 @csrf
                 <flux:button type="submit" class="cursor-pointer" icon="envelope" variant="primary" size="sm">
                     Mandar notificaciones
                 </flux:button>
             </form>
-        </div>
+        </x-caja-titulo>
 
         <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Días', 'Fecha notificación']">
             @forelse ($caducados as $caducado)
@@ -35,6 +35,6 @@
             {{ $caducados->links() }}
         </div>
 
-    </div>
+    </x-caja-principal>
 
 </x-layouts.app>

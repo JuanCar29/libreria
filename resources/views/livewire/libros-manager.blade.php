@@ -1,15 +1,14 @@
-<div class="w-7xl mx-auto rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm sm:p-8 dark:border-gray-700 dark:bg-gray-800">
+<x-caja-principal>
 
     <x-alerta />
 
-    <div class="mb-4 flex items-center justify-between p-2">
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Listado de libros</h5>
+    <x-caja-titulo :title="'Listado de libros'">
         <flux:button wire:click="create" class="cursor-pointer" icon="plus" variant="primary" size="sm">
             Nuevo libro
         </flux:button>
-    </div>
+    </x-caja-titulo>
 
-    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black sm:grid-cols-2 lg:grid-cols-3 dark:bg-gray-700 dark:text-white">
+    <x-caja-filtros>
         <flux:input wire:model.live.debounce.500ms="buscar_titulo" placeholder="Buscar por título" clearable />
         <flux:select wire:model.live="buscar_genero">
             <option value="">Selecciona un género</option>
@@ -19,7 +18,7 @@
                 <flux:select.option value="">No hay géneros</flux:select.option>
             @endforelse
         </flux:select>
-    </div>
+    </x-caja-filtros>
 
     <x-data-table :headers="['Id', 'Título', 'Genero', 'Autor', 'Prestamos', 'Acciones']">
         @forelse ($this->libros as $libro)
@@ -79,4 +78,5 @@
             </form>
         </div>
     </flux:modal>
-</div>
+
+</x-caja-principal>

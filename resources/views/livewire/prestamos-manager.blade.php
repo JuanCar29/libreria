@@ -1,19 +1,18 @@
-<div class="w-7xl mx-auto rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm sm:p-8 dark:border-gray-700 dark:bg-gray-800">
+<x-caja-principal>
 
     <x-alerta />
 
-    <div class="mb-4 flex items-center justify-between p-2">
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Listado de prestamos {{ $this->totalprestamos() }}</h5>
+    <x-caja-titulo :title="'Listado de prestamos ' . $this->totalprestamos()">
         <flux:button wire:click="create" class="cursor-pointer" icon="plus" variant="primary" size="sm">
             Nuevo prestamo
         </flux:button>
-    </div>
+    </x-caja-titulo>
 
-    <div class="mb-4 grid grid-cols-1 gap-4 rounded-lg bg-gray-50 p-4 text-black lg:grid-cols-3 dark:bg-gray-800 dark:text-white">
+    <x-caja-filtros>
         <flux:input wire:model.live="dia" type="date" label="Fecha de prestamo" />
-        <flux:input wire:model.liv.debounce.500ms="buscar_libro_id" type="text" label="Buscar libro por ID" clearable />
+        <flux:input wire:model.live.debounce.500ms="buscar_libro_id" type="text" label="Buscar libro por ID" clearable />
         <flux:input wire:model.live.debounce.500ms="buscar_socio_id" type="text" label="Buscar socio por ID" clearable />
-    </div>
+    </x-caja-filtros>
 
     <x-data-table :headers="['Id', 'Libro', 'Socio', 'Fecha prestamo', 'Fecha devolucion', 'Dias prestado', 'Acciones']">
         @forelse ($this->prestamos as $prestamo)
@@ -83,4 +82,6 @@
             </form>
         </div>
     </flux:modal>
-</div>
+
+
+</x-caja-principal>

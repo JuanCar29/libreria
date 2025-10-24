@@ -73,12 +73,17 @@ class PrestamosHistorial extends Component
             ->paginate(10);
     }
 
-    public function updatingDesde()
-    {
-        $this->resetPage();
-    }
+    /*     public function updatingDesde()
+        {
+            $this->resetPage();
+        }
 
-    public function updatingHasta()
+        public function updatingHasta()
+        {
+            $this->resetPage();
+        } */
+
+    public function updating()
     {
         $this->resetPage();
     }

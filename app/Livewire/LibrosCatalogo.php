@@ -40,6 +40,11 @@ class LibrosCatalogo extends Component
             ->get();
     }
 
+    public function updating()
+    {
+        $this->resetPage();
+    }
+
     #[Layout('components.layouts.guest')]
     public function render()
     {

@@ -155,6 +155,11 @@ class PrestamosManager extends Component
         return $query->orderBy('nombre')->get();
     }
 
+    public function updating()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.prestamos-manager')

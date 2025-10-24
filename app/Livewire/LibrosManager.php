@@ -97,6 +97,11 @@ class LibrosManager extends Component
             ->paginate(10);
     }
 
+    public function updating()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.libros-manager')
