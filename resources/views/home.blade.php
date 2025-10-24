@@ -4,5 +4,6 @@
         <p class="text-xl">Bienvenido a la página principal de la aplicación.</p>
         <p class="text-xl">{{ ucwords(now()->translatedFormat('l, j F Y')) }}</p>
         <p class="text-xl">{{ now()->format('H:i') }}</p>
+        <p>Esto es una prueba</p>
     </div>
 </x-layouts.guest>
