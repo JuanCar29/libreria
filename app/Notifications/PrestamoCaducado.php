@@ -16,6 +16,9 @@ class PrestamoCaducado extends Notification implements ShouldQueue
     public function __construct($prestamo)
     {
         $this->prestamo = $prestamo;
+        $this->diasTranscurridos = $prestamo->fecha_devolucion
+            ? today()->diffInDays($prestamo->fecha_devolucion, false)
+            : 0;
     }
 
     /**
@@ -39,7 +42,7 @@ class PrestamoCaducado extends Notification implements ShouldQueue
             ->line('Tienes un préstamo vencido. Por favor, devuelve el libro lo antes posible.')
             ->line('**Libro:** '.$this->prestamo->libro->titulo)
             ->line('**Fecha límite:** '.$this->prestamo->fecha_devolucion->format('d/m/Y'))
-            ->line('**Días de retraso:** '.$this->prestamo->diasTranscurridos())
+            ->line('**Días de retraso:** '.$this->diasTranscurridos)
             ->action('Ver sitio web', url('/'))
             ->line('Gracias por usar nuestra biblioteca.');
     }

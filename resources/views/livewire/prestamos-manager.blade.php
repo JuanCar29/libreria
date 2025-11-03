@@ -23,7 +23,12 @@
                 <td class="p-4 text-left">{{ $prestamo->libro->titulo }}</td>
                 <td class="p-4 text-left">{{ $prestamo->socio->nombre }}</td>
                 <td class="p-4">{{ $prestamo->fecha_prestamo->format('d-n-Y') }}</td>
-                <td class="p-4">{{ $prestamo->fecha_devolucion->format('d-n-Y') }}</td>
+                <td @class([
+                    'p-4',
+                    'text-red-600' => $prestamo->fecha_devolucion < today(),
+                ])>
+                    {{ $prestamo->fecha_devolucion->format('d-n-Y') }}
+                </td>
                 <td class="p-4">{{ $prestamo->dias_transcurridos }}</td>
                 <td class="flex justify-center gap-4 p-4">
                     <x-flux::button wire:click="edit('{{ $prestamo->id }}')" class="cursor-pointer" variant="filled" icon="pencil-square" size="sm">

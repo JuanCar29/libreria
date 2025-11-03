@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Prestamo;
+use App\Notifications\PrestamoCaducado;
 
 class PrincipalController extends Controller
 {
     public function caducados()
     {
         $caducados = Prestamo::where('fecha_devolucion', '<', today())
+            ->where('fecha_devolucion_real', null)
             ->orderBy('fecha_devolucion', 'desc')
             ->with(['libro', 'socio'])
             ->paginate(10);
@@ -33,7 +35,7 @@ class PrincipalController extends Controller
         }
 
         foreach ($prestamos as $prestamo) {
-            $prestamo->socio->notify(new PrestamoCaducado);
+            $prestamo->socio->notify(new PrestamoCaducado($prestamo));
             $prestamo->update(['fecha_notificacion' => today()]);
         }
 

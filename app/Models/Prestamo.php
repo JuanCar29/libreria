@@ -10,7 +10,7 @@ class Prestamo extends Model
 {
     protected $fillable = ['libro_id', 'socio_id', 'user_id', 'fecha_prestamo', 'fecha_devolucion', 'fecha_devolucion_real', 'sancion', 'fecha_notificacion'];
 
-    public const DIAS = 20;
+    public const DIAS = 15;
 
     public const SANCION = 0.50;
 
