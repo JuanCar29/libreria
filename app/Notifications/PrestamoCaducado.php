@@ -13,6 +13,8 @@ class PrestamoCaducado extends Notification implements ShouldQueue
 
     protected $prestamo;
 
+    protected $diasTranscurridos;
+
     public function __construct($prestamo)
     {
         $this->prestamo = $prestamo;

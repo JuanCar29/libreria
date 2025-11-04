@@ -36,6 +36,9 @@
                     <x-flux::button wire:click="enviar('{{ $socio->id }}')" class="cursor-pointer" variant="primary" icon="envelope" size="sm">
                         Email
                     </x-flux::button>
+                    <x-flux::button :href="route('socios.show', $socio)" class="cursor-pointer" icon="eye" size="sm">
+                        Ver
+                    </x-flux::button>
                 </td>
             </tr>
         @empty

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PrestamosPdfController;
 use App\Http\Controllers\PrincipalController;
+use App\Http\Controllers\SingleController;
 use App\Livewire\GenerosManager;
 use App\Livewire\LibrosCatalogo;
 use App\Livewire\LibrosManager;
@@ -24,6 +25,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('generos', GenerosManager::class)->name('generos.index');
     Route::get('libros', LibrosManager::class)->name('libros.index');
     Route::get('socios', SociosManager::class)->name('socios.index');
+    Route::get('socios/{socio}', [SingleController::class, 'showSocio'])->name('socios.show');
     Route::get('prestamos', PrestamosManager::class)->name('prestamos.index');
     Route::get('historial', PrestamosHistorial::class)->name('prestamos.historial');
     Route::get('/prestamos/pdf', [PrestamosPdfController::class, 'generatePdf'])->name('prestamos.pdf');

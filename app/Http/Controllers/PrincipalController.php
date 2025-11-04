@@ -10,7 +10,7 @@ class PrincipalController extends Controller
     public function caducados()
     {
         $caducados = Prestamo::where('fecha_devolucion', '<', today())
-            ->where('fecha_devolucion_real', null)
+            ->whereNotNull('fecha_devolucion_real')
             ->orderBy('fecha_devolucion', 'desc')
             ->with(['libro', 'socio'])
             ->paginate(10);
@@ -21,9 +21,10 @@ class PrincipalController extends Controller
     public function mandarMails()
     {
         $prestamos = Prestamo::where('fecha_devolucion', '<', today())
+            ->whereNull('fecha_devolucion_real')
             ->where(function ($query) {
                 $query->whereNull('fecha_notificacion')
-                    ->orWhere('fecha_notificacion', '<', today()->addDays(3));
+                    ->orWhere('fecha_notificacion', '<', today()->subDays(3));
             })
             ->with(['libro', 'socio'])
             ->get();

@@ -116,14 +116,15 @@ class SociosManager extends Component
     #[Computed]
     public function socios()
     {
-        return Socio::orderBy('nombre')
-            ->where('nombre', 'like', '%'.$this->buscar_nombre.'%')
+        return Socio::where('nombre', 'like', '%'.$this->buscar_nombre.'%')
             ->where('telefono', 'like', '%'.$this->buscar_telefono.'%')
             ->when($this->buscar_activo !== '', function ($query) {
                 $query->where('activo', $this->buscar_activo);
             })
             ->withCount('prestamos')
             ->withSum('prestamos', 'sancion')
+            ->orderBy('prestamos_sum_sancion', 'desc')
+            ->orderBy('prestamos_count', 'desc')
             ->paginate(10);
     }
 
