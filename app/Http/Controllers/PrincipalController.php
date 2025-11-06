@@ -10,7 +10,7 @@ class PrincipalController extends Controller
     public function caducados()
     {
         $caducados = Prestamo::where('fecha_devolucion', '<', today())
-            ->whereNotNull('fecha_devolucion_real')
+            ->whereNull('fecha_devolucion_real')
             ->orderBy('fecha_devolucion', 'desc')
             ->with(['libro', 'socio'])
             ->paginate(10);

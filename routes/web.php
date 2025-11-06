@@ -24,6 +24,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('dashboard', [PrincipalController::class, 'caducados'])->name('dashboard');
     Route::get('generos', GenerosManager::class)->name('generos.index');
     Route::get('libros', LibrosManager::class)->name('libros.index');
+    Route::get('libros/{libro}', [SingleController::class, 'showLibro'])->name('libros.show');
     Route::get('socios', SociosManager::class)->name('socios.index');
     Route::get('socios/{socio}', [SingleController::class, 'showSocio'])->name('socios.show');
     Route::get('prestamos', PrestamosManager::class)->name('prestamos.index');

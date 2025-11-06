@@ -30,14 +30,14 @@
                 <td class="p-4">{{ $socio->prestamos_count }}</td>
                 <td class="p-4">{{ number_format($socio->prestamos_sum_sancion, 2, ',', '.') }} €</td>
                 <td class="flex items-center justify-center gap-4 p-4">
+                    <x-flux::button :href="route('socios.show', $socio)" class="cursor-pointer" icon="eye" size="sm">
+                        Ver
+                    </x-flux::button>
                     <x-flux::button wire:click="edit('{{ $socio->id }}')" class="cursor-pointer" variant="filled" icon="pencil-square" size="sm">
                         Editar
                     </x-flux::button>
                     <x-flux::button wire:click="enviar('{{ $socio->id }}')" class="cursor-pointer" variant="primary" icon="envelope" size="sm">
                         Email
-                    </x-flux::button>
-                    <x-flux::button :href="route('socios.show', $socio)" class="cursor-pointer" icon="eye" size="sm">
-                        Ver
                     </x-flux::button>
                 </td>
             </tr>

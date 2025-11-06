@@ -102,6 +102,8 @@ class PrestamosManager extends Component
             $prestamo->update(['sancion' => $this->sancion]);
         }
         session()->flash('status', 'Prestamo devuelto correctamente');
+
+        return $this->redirect(route('prestamos.index'), navigate: true);
     }
 
     #[Computed]

@@ -26,11 +26,14 @@
                 <td class="p-4">
                     {{ $libro->id }}
                 </td>
-                <td @class(['p-4 text-left', 'text-red-600' => $libro->prestado()])>{{ $libro->titulo }}</td>
+                <td @class(['p-4 text-left', 'text-red-600' => $libro->prestado])>{{ $libro->titulo }}</td>
                 <td class="p-4 text-left">{{ $libro->genero->nombre }}</td>
                 <td class="p-4 text-left">{{ $libro->autor }}</td>
                 <td class="p-4">{{ $libro->prestamos_count }}
-                <td class="p-4">
+                <td class="flex items-center justify-center gap-4 p-4">
+                    <x-flux::button :href="route('libros.show', $libro)" class="cursor-pointer" icon="eye" size="sm">
+                        Ver
+                    </x-flux::button>
                     <x-flux::button wire:click="edit('{{ $libro->id }}')" class="cursor-pointer" variant="filled" icon="pencil-square" size="sm">
                         Editar
                     </x-flux::button>

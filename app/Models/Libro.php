@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,8 +22,8 @@ class Libro extends Model
         return $this->hasMany(Prestamo::class);
     }
 
-    public function prestado()
+    protected function prestado(): Attribute
     {
-        return $this->prestamos()->whereNull('fecha_devolucion_real')->exists();
+        return Attribute::get(fn () => $this->prestamos()->whereNull('fecha_devolucion_real')->exists());
     }
 }
