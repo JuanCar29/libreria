@@ -23,7 +23,7 @@
                 <td class="p-4">
                     {{ $libro->isbn }}
                 </td>
-                <td @class(['p-4 text-left', 'text-red-600' => $libro->prestado()])>{{ $libro->titulo }}</td>
+                <td @class(['p-4 text-left', 'text-red-600' => $libro->prestado])>{{ $libro->titulo }}</td>
                 <td class="p-4 text-left">{{ $libro->genero->nombre }}</td>
                 <td class="p-4 text-left">{{ $libro->autor }}</td>
                 <td class="p-4">{{ $libro->prestamos_count }}
